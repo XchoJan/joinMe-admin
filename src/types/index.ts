@@ -5,6 +5,7 @@ export interface User {
   phone?: string
   city?: string
   photo?: string
+  premium: boolean
   createdAt: string
   updatedAt: string
 }

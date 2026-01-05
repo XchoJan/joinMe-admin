@@ -17,7 +17,7 @@
 
 .table-header {
   display: grid;
-  grid-template-columns: 60px 1.5fr 2fr 1.5fr 1fr 1.5fr 120px;
+  grid-template-columns: 60px 1.5fr 2fr 1.5fr 1fr 100px 1.5fr 120px;
   gap: 10px;
   padding: 15px;
   background-color: #34495e;
@@ -28,7 +28,7 @@
 
 .table-row {
   display: grid;
-  grid-template-columns: 60px 1.5fr 2fr 1.5fr 1fr 1.5fr 120px;
+  grid-template-columns: 60px 1.5fr 2fr 1.5fr 1fr 100px 1.5fr 120px;
   gap: 10px;
   padding: 15px;
   border-bottom: 1px solid #eee;
@@ -148,6 +148,56 @@
   margin-top: 20px;
   padding-top: 20px;
   border-top: 2px solid #eee;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-premium {
+  background: none;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 5px 10px;
+  transition: all 0.3s;
+  width: 100%;
+}
+
+.btn-premium:hover {
+  border-color: #f39c12;
+  background-color: #fff9e6;
+}
+
+.btn-premium.active {
+  border-color: #f39c12;
+  background-color: #fff9e6;
+  color: #f39c12;
+}
+
+.btn-premium-large {
+  width: 100%;
+  padding: 12px;
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-premium-large:hover {
+  background-color: #e67e22;
+}
+
+.btn-premium-large.active {
+  background-color: #27ae60;
+}
+
+.btn-premium-large.active:hover {
+  background-color: #229954;
 }
 
 .btn-delete-large {

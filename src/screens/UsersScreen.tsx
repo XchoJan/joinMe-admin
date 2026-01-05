@@ -42,6 +42,19 @@ const UsersScreen = () => {
     }
   }
 
+  const handleTogglePremium = async (userId: number) => {
+    try {
+      const response = await api.post(`/admin/users/${userId}/toggle-premium`)
+      const updatedUser = response.data
+      setUsers(users.map((u) => (u.id === userId ? updatedUser : u)))
+      if (selectedUser?.id === userId) {
+        setSelectedUser(updatedUser)
+      }
+    } catch (err: any) {
+      alert(err.response?.data?.message || 'Ошибка изменения статуса премиум')
+    }
+  }
+
   if (loading) {
     return <div className="loading">Загрузка пользователей...</div>
   }
@@ -67,6 +80,7 @@ const UsersScreen = () => {
             <div className="col-email">Email</div>
             <div className="col-phone">Телефон</div>
             <div className="col-city">Город</div>
+            <div className="col-premium">Премиум</div>
             <div className="col-created">Создан</div>
             <div className="col-actions">Действия</div>
           </div>
@@ -82,6 +96,15 @@ const UsersScreen = () => {
                 <div className="col-email">{user.email}</div>
                 <div className="col-phone">{user.phone || '-'}</div>
                 <div className="col-city">{user.city || '-'}</div>
+                <div className="col-premium">
+                  <button
+                    onClick={() => handleTogglePremium(user.id)}
+                    className={`btn-premium ${user.premium ? 'active' : ''}`}
+                    title={user.premium ? 'Отключить премиум' : 'Включить премиум'}
+                  >
+                    {user.premium ? '⭐' : '☆'}
+                  </button>
+                </div>
                 <div className="col-created">
                   {new Date(user.createdAt).toLocaleDateString('ru-RU')}
                 </div>
@@ -122,10 +145,17 @@ const UsersScreen = () => {
               <p><strong>Email:</strong> {selectedUser.email}</p>
               <p><strong>Телефон:</strong> {selectedUser.phone || 'Не указан'}</p>
               <p><strong>Город:</strong> {selectedUser.city || 'Не указан'}</p>
+              <p><strong>Премиум:</strong> {selectedUser.premium ? '⭐ Да' : '☆ Нет'}</p>
               <p><strong>Создан:</strong> {new Date(selectedUser.createdAt).toLocaleString('ru-RU')}</p>
               <p><strong>Обновлен:</strong> {new Date(selectedUser.updatedAt).toLocaleString('ru-RU')}</p>
             </div>
             <div className="details-actions">
+              <button
+                onClick={() => handleTogglePremium(selectedUser.id)}
+                className={`btn-premium-large ${selectedUser.premium ? 'active' : ''}`}
+              >
+                {selectedUser.premium ? '⭐ Отключить премиум' : '☆ Включить премиум'}
+              </button>
               <button
                 onClick={() => handleDeleteUser(selectedUser.id)}
                 className="btn-delete-large"

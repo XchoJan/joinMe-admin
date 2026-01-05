@@ -2,6 +2,20 @@ import { useState, useEffect } from 'react'
 import api from '../services/api'
 import './StatisticsScreen.css'
 
+interface AnalyticsStats {
+  total: {
+    userCreated: number
+    eventCreated: number
+    eventRequests: number
+  }
+  daily: {
+    date: string
+    userCreated: number
+    eventCreated: number
+    eventRequests: number
+  }[]
+}
+
 interface Statistics {
   totalUsers: number
   totalEvents: number
@@ -11,6 +25,7 @@ interface Statistics {
   pendingRequests: number
   eventsByCity: { city: string; count: number }[]
   recentUsers: { date: string; count: number }[]
+  analytics?: AnalyticsStats
 }
 
 const StatisticsScreen = () => {
@@ -92,6 +107,59 @@ const StatisticsScreen = () => {
           <div className="stat-label">Ожидающих заявок</div>
         </div>
       </div>
+
+      {stats.analytics && (
+        <div className="analytics-section">
+          <h2>Активность в приложении</h2>
+          <div className="stats-grid">
+            <div className="stat-card analytics-card">
+              <div className="stat-icon">👤</div>
+              <div className="stat-value">{stats.analytics.total.userCreated}</div>
+              <div className="stat-label">Новых пользователей</div>
+            </div>
+
+            <div className="stat-card analytics-card">
+              <div className="stat-icon">📅</div>
+              <div className="stat-value">{stats.analytics.total.eventCreated}</div>
+              <div className="stat-label">Созданных событий</div>
+            </div>
+
+            <div className="stat-card analytics-card">
+              <div className="stat-icon">✋</div>
+              <div className="stat-value">{stats.analytics.total.eventRequests}</div>
+              <div className="stat-label">Откликов на события</div>
+            </div>
+          </div>
+
+          <div className="stats-section">
+            <h3>Активность по дням (последние 30 дней)</h3>
+            <div className="daily-stats">
+              {stats.analytics.daily.length === 0 ? (
+                <div className="empty-state">Нет данных</div>
+              ) : (
+                <div className="daily-stats-table">
+                  <div className="daily-stats-header">
+                    <div className="daily-stat-col">Дата</div>
+                    <div className="daily-stat-col">Новые пользователи</div>
+                    <div className="daily-stat-col">Созданные события</div>
+                    <div className="daily-stat-col">Отклики</div>
+                  </div>
+                  {stats.analytics.daily.map((item, index) => (
+                    <div key={index} className="daily-stats-row">
+                      <div className="daily-stat-col">
+                        {new Date(item.date).toLocaleDateString('ru-RU')}
+                      </div>
+                      <div className="daily-stat-col">{item.userCreated}</div>
+                      <div className="daily-stat-col">{item.eventCreated}</div>
+                      <div className="daily-stat-col">{item.eventRequests}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="stats-sections">
         <div className="stats-section">
