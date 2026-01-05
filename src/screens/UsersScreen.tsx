@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import api from '../services/api'
 import { User } from '../types'
+import { shortenId } from '../utils/formatId'
 import './UsersScreen.css'
 
 const UsersScreen = () => {
@@ -74,7 +75,7 @@ const UsersScreen = () => {
           ) : (
             users.map((user) => (
               <div key={user.id} className="table-row">
-                <div className="col-id">{user.id}</div>
+                <div className="col-id">{shortenId(user.id)}</div>
                 <div className="col-name" onClick={() => setSelectedUser(user)}>
                   {user.name}
                 </div>

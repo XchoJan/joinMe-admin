@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import api from '../services/api'
 import { Chat } from '../types'
+import { shortenId } from '../utils/formatId'
 import './ChatsScreen.css'
 
 const ChatsScreen = () => {
@@ -72,7 +73,7 @@ const ChatsScreen = () => {
           ) : (
             chats.map((chat) => (
               <div key={chat.id} className="table-row">
-                <div className="col-id">{chat.id}</div>
+                <div className="col-id">{shortenId(chat.id)}</div>
                 <div className="col-event" onClick={() => setSelectedChat(chat)}>
                   {chat.event?.title || `Событие ID: ${chat.eventId}`}
                 </div>

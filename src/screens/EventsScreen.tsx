@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import api from '../services/api'
 import { Event } from '../types'
+import { shortenId } from '../utils/formatId'
 import './EventsScreen.css'
 
 const EventsScreen = () => {
@@ -74,7 +75,7 @@ const EventsScreen = () => {
           ) : (
             events.map((event) => (
               <div key={event.id} className="table-row">
-                <div className="col-id">{event.id}</div>
+                <div className="col-id">{shortenId(event.id)}</div>
                 <div className="col-title" onClick={() => setSelectedEvent(event)}>
                   {event.title}
                 </div>
