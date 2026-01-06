@@ -72,11 +72,13 @@
   cursor: pointer;
   color: #3498db;
   text-decoration: underline;
+  padding-left: 100px;
 }
 
 .col-actions {
   display: flex;
   gap: 5px;
+  padding-left: 100px;
 }
 
 .btn-view,
